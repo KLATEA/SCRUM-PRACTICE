@@ -1,0 +1,40 @@
+﻿@page "/articles"
+
+@using eshop_Scrum_Practice.Data
+@inject ArticleService ArticleService
+@inject CartService CartService
+
+<h1>Articles</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var article in articles)
+        {
+            <tr>
+                <th scope="row">@article.Id</th>
+                <td>@article.Name</td>
+                <td>@article.Price</td>
+                <td><button type="button" class="btn btn-primary" @onclick="@(_ => AddArticleToCart(article))">Add to cart</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private Article[] articles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articles = await ArticleService.GetAllAsync();
+    }
+
+    private Task AddArticleToCart(Article article)
+      => CartService.AddItemAsync(article);
+}

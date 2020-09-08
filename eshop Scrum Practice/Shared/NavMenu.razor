@@ -1,5 +1,8 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">eshop Scrum Practice</a>
+﻿@using eshop_Scrum_Practice.Data
+@inject CartService CartService
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">Food Shop</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -13,13 +16,13 @@
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="articles">
+                <span class="oi oi-plus" aria-hidden="true"></span> Articles
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            <NavLink class="nav-link" href="cart">
+                <span class="oi oi-plus" aria-hidden="true"></span> Cart (@CartService.Count)
             </NavLink>
         </li>
     </ul>
@@ -33,5 +36,10 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override void OnInitialized()
+    {
+        CartService.OnChange += () => InvokeAsync(StateHasChanged);
     }
 }

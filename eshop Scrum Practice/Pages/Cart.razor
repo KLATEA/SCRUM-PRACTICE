@@ -1,0 +1,45 @@
+﻿@page "/cart"
+
+@using eshop_Scrum_Practice.Data
+@inject CartService CartService
+
+<h1>Cart</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var (cartItem, index) in articles.Select((value, index) => (value, index)))
+        {
+            <tr>
+                <th scope="row">@cartItem.Article.Id</th>
+                <td>@cartItem.Article.Name</td>
+                <td>@cartItem.Article.Price</td>
+                <td>@cartItem.Count</td>
+                <td><button type="button" class="btn btn-primary" @onclick="@(_ => RemoveArticleFromCart(index))">Remove</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private CartItem[] articles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articles = await CartService.GetAllAsync();
+    }
+
+    private async Task RemoveArticleFromCart(int index)
+    {
+        await CartService.RemoveItemASync(index);
+        articles = await CartService.GetAllAsync();
+    }
+}

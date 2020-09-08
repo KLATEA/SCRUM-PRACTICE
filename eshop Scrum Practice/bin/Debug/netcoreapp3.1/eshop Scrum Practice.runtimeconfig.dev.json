@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\kilen\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\kilen\\.nuget\\packages"
+    ]
+  }
+}
